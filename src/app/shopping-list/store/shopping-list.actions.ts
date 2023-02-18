@@ -4,7 +4,7 @@ import { Action } from "@ngrx/store";
 export const ADD_INGREDIENT = 'ADD_INGREDIENT'
 export const ADD_INGREDIENTS = 'ADD_INGREDIENTS'
 export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT'
-export const DELETE_INGREDIENTS = 'DELETE_INGREDIENTS'
+export const DELETE_INGREDIENT = 'DELETE_INGREDIENTS'
 export const START_EDIT='START_EDIT';
 export const STOP_EDIT='STOP_EDIT';
 
@@ -20,11 +20,11 @@ export class AddIngredients implements Action {
 }
 export class UpdateIngredient implements Action {
   readonly type = UPDATE_INGREDIENT;
-  constructor(public payload: { index: number, ingredient: Ingredient }) { }
+  constructor(public payload:  Ingredient) { }
 }
 export class DeleteIngredients implements Action {
-  readonly type = DELETE_INGREDIENTS;
-  constructor(public payload: number ) { }
+  readonly type = DELETE_INGREDIENT;
+
 }
 
 export class StartEdit implements Action{
