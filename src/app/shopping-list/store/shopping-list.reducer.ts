@@ -34,26 +34,31 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
         ingredients: [...state.ingredients, ...action.payload]
       }
     case ShoppingListActions.UPDATE_INGREDIENT:
-      let ingredient = state.ingredients[action.payload.index];
-      ingredient = action.payload.ingredient
+      let ingredient = state.ingredients[state.editedIngredientIndex];
+      // ingredient = action.payload.ingredient
+          // ingredient = action.payload
       const updatedIngredient = {
         ...ingredient,
-        ...action.payload.ingredient
+        ...action.payload  //因為payLoad以及改成ingredient
       }
       const updatedIngredients = [...state.ingredients];
-      updatedIngredients[action.payload.index] = updatedIngredient
+      updatedIngredients[state.editedIngredientIndex] = updatedIngredient
       return {
         ...state,
-        ingredients: updatedIngredients
+        ingredients: updatedIngredients,
+        editedIngredientIndex:-1,
+        editedIngredient:null
       }
-    case ShoppingListActions.DELETE_INGREDIENTS:
+    case ShoppingListActions.DELETE_INGREDIENT:
       return {
         ...state,
-        ingredients: state.ingredients.filter((ingredient, index) => index !== action.payload)
+        ingredients: state.ingredients.filter((ingredient, index) => index !== state.editedIngredientIndex),
+        editedIngredientIndex:-1,
+        editedIngredient:null
       };
     case ShoppingListActions.START_EDIT:
       return {
-        state,
+        ...state,
         editedIngredientIndex:action.payload,  //來自payload
         editedIngredient:{...state.ingredients[action.payload]} //資料來源，來自目前的state，但是要拿複本
 
