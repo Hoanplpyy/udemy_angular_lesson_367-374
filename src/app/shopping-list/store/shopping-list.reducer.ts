@@ -3,22 +3,22 @@ import { Ingredient } from "src/app/shared/ingredient.model";
 import * as ShoppingListActions from './shopping-list.actions'
 
 export interface State {
-  ingredients:Ingredient[],
-  editedIngredient:Ingredient,
-  editedIngredientIndex:number
+  ingredients: Ingredient[],
+  editedIngredient: Ingredient,
+  editedIngredientIndex: number
 }
 
 export interface AppState {
-  shoppingList:State
+  shoppingList: State
 }
 
-const initialState :State = {
+const initialState: State = {
   ingredients: [
     new Ingredient('Apples', 5),
     new Ingredient('Tomatoes', 10),
   ],
-  editedIngredient:null,
-  editedIngredientIndex:-1
+  editedIngredient: null,
+  editedIngredientIndex: -1
 }
 
 export function shoppingListReducer(state = initialState, action: ShoppingListActions.ShoppingListActions) {
@@ -49,8 +49,22 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
     case ShoppingListActions.DELETE_INGREDIENTS:
       return {
         ...state,
-        ingredients: state.ingredients.filter((ingredient,index)=>index!==action.payload)
+        ingredients: state.ingredients.filter((ingredient, index) => index !== action.payload)
+      };
+    case ShoppingListActions.START_EDIT:
+      return {
+        state,
+        editedIngredientIndex:action.payload,  //來自payload
+        editedIngredient:{...state.ingredients[action.payload]} //資料來源，來自目前的state，但是要拿複本
+
       }
+    case ShoppingListActions.STOP_EDIT:
+      return {
+        ...state,
+        editedIngredient: null,   //只要恢復初始設定
+        editedIngredientIndex: -1 //只要恢復初始設定
+      }
+
     default:
       return state
   }
